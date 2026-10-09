@@ -1,0 +1,372 @@
+.rounded-xl {
+  border-radius: var(--radius-xl);
+}
+
+.p-3 {
+  padding: calc(var(--spacing) * 3);
+}
+
+.text-xs {
+  font-size: var(--text-xs);
+  line-height: var(--tw-leading, var(--text-xs--line-height));
+}
+
+.font-semibold {
+  --tw-font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-semibold);
+}
+
+.mb-2 {
+  margin-bottom: calc(var(--spacing) * 2);
+}
+
+.flex {
+  display: flex;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.gap-4 {
+  gap: calc(var(--spacing) * 4);
+}
+
+:where(.space-y-6 > :not(:last-child)) {
+  --tw-space-y-reverse: 0;
+  margin-block-start: calc(
+    calc(var(--spacing) * 6) * var(--tw-space-y-reverse)
+  );
+  margin-block-end: calc(
+    calc(var(--spacing) * 6) * calc(1 - var(--tw-space-y-reverse))
+  );
+}
+
+.items-center {
+  align-items: center;
+}
+
+.text-2xl {
+  font-size: var(--text-2xl);
+  line-height: var(--tw-leading, var(--text-2xl--line-height));
+}
+
+.font-bold {
+  --tw-font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-bold);
+}
+
+.text-sm {
+  font-size: var(--text-sm);
+  line-height: var(--tw-leading, var(--text-sm--line-height));
+}
+
+.mt-0\.5 {
+  margin-top: calc(var(--spacing) * 0.5);
+}
+
+.gap-2 {
+  gap: calc(var(--spacing) * 2);
+}
+
+.px-3 {
+  padding-inline: calc(var(--spacing) * 3);
+}
+
+.py-2 {
+  padding-block: calc(var(--spacing) * 2);
+}
+
+.font-medium {
+  --tw-font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-medium);
+}
+
+.border {
+  border-style: var(--tw-border-style);
+  border-width: 1px;
+}
+
+@media (hover: hover) {
+  .hover\:bg-gray-50:hover {
+    background-color: var(--color-gray-50);
+  }
+}
+
+.px-4 {
+  padding-inline: calc(var(--spacing) * 4);
+}
+
+.text-white {
+  color: var(--color-white);
+}
+
+@media (hover: hover) {
+  .hover\:opacity-90:hover {
+    opacity: 90%;
+  }
+}
+
+.grid {
+  display: grid;
+}
+
+.grid-cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.rounded-2xl {
+  border-radius: var(--radius-2xl);
+}
+
+.p-4 {
+  padding: calc(var(--spacing) * 4);
+}
+
+.mb-3 {
+  margin-bottom: calc(var(--spacing) * 3);
+}
+
+.p-2\.5 {
+  padding: calc(var(--spacing) * 2.5);
+}
+
+.text-lg {
+  font-size: var(--text-lg);
+  line-height: var(--tw-leading, var(--text-lg--line-height));
+}
+
+.leading-tight {
+  --tw-leading: var(--leading-tight);
+  line-height: var(--leading-tight);
+}
+
+.mt-1 {
+  margin-top: var(--spacing);
+}
+
+.grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.col-span-2 {
+  grid-column: span 2 / span 2;
+}
+
+.p-5 {
+  padding: calc(var(--spacing) * 5);
+}
+
+.text-base {
+  font-size: var(--text-base);
+  line-height: var(--tw-leading, var(--text-base--line-height));
+}
+
+.mb-4 {
+  margin-bottom: calc(var(--spacing) * 4);
+}
+
+:where(.space-y-2 > :not(:last-child)) {
+  --tw-space-y-reverse: 0;
+  margin-block-start: calc(
+    calc(var(--spacing) * 2) * var(--tw-space-y-reverse)
+  );
+  margin-block-end: calc(
+    calc(var(--spacing) * 2) * calc(1 - var(--tw-space-y-reverse))
+  );
+}
+
+.mt-2 {
+  margin-top: calc(var(--spacing) * 2);
+}
+
+.w-2\.5 {
+  width: calc(var(--spacing) * 2.5);
+}
+
+.h-2\.5 {
+  height: calc(var(--spacing) * 2.5);
+}
+
+.rounded-full {
+  border-radius: 9999px;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.px-5 {
+  padding-inline: calc(var(--spacing) * 5);
+}
+
+.py-4 {
+  padding-block: calc(var(--spacing) * 4);
+}
+
+.w-full {
+  width: 100%;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.py-3 {
+  padding-block: calc(var(--spacing) * 3);
+}
+
+.border-t {
+  border-top-style: var(--tw-border-style);
+  border-top-width: 1px;
+}
+
+@media (hover: hover) {
+  .hover\:bg-blue-50\/20:hover {
+    background-color: color-mix(
+      in srgb,
+      oklch(97% 0.014 254.604) 20%,
+      transparent
+    );
+  }
+}
+
+.transition-colors {
+  transition-property:
+    color, background-color, border-color, outline-color, text-decoration-color,
+    fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+  transition-timing-function: var(
+    --tw-ease,
+    var(--default-transition-timing-function)
+  );
+  transition-duration: var(--tw-duration, var(--default-transition-duration));
+}
+
+.py-3\.5 {
+  padding-block: calc(var(--spacing) * 3.5);
+}
+
+.w-2 {
+  width: calc(var(--spacing) * 2);
+}
+
+.h-2 {
+  height: calc(var(--spacing) * 2);
+}
+
+.fixed {
+  position: fixed;
+}
+
+.inset-0 {
+  inset: 0px;
+}
+
+.z-50 {
+  z-index: 50;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.rounded-3xl {
+  border-radius: var(--radius-3xl);
+}
+
+.p-6 {
+  padding: calc(var(--spacing) * 6);
+}
+
+.max-w-md {
+  max-width: var(--container-md);
+}
+
+.mb-5 {
+  margin-bottom: calc(var(--spacing) * 5);
+}
+
+.p-2 {
+  padding: calc(var(--spacing) * 2);
+}
+
+@media (hover: hover) {
+  .hover\:bg-gray-100:hover {
+    background-color: var(--color-gray-100);
+  }
+}
+
+:where(.space-y-4 > :not(:last-child)) {
+  --tw-space-y-reverse: 0;
+  margin-block-start: calc(
+    calc(var(--spacing) * 4) * var(--tw-space-y-reverse)
+  );
+  margin-block-end: calc(
+    calc(var(--spacing) * 4) * calc(1 - var(--tw-space-y-reverse))
+  );
+}
+
+.block {
+  display: block;
+}
+
+.mb-1\.5 {
+  margin-bottom: calc(var(--spacing) * 1.5);
+}
+
+.py-2\.5 {
+  padding-block: calc(var(--spacing) * 2.5);
+}
+
+.outline-none {
+  --tw-outline-style: none;
+  outline-style: none;
+}
+
+.resize-none {
+  resize: none;
+}
+
+.gap-3 {
+  gap: calc(var(--spacing) * 3);
+}
+
+.mt-6 {
+  margin-top: calc(var(--spacing) * 6);
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.finance-operations-scroll {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+.finance-operations-table {
+  min-width: 980px;
+}
+
+.finance-operations-table :is(th, td) {
+  white-space: nowrap;
+}
+
+.finance-operations-table td:nth-child(6) {
+  min-width: 190px;
+  white-space: normal;
+}
+
+@media (max-width: 700px) {
+  .finance-operations-scroll {
+    cursor: grab;
+  }
+
+  .finance-operations-scroll:active {
+    cursor: grabbing;
+  }
+}

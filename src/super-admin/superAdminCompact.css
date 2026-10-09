@@ -1,0 +1,35 @@
+/* Keep the original layout proportions; only make text more compact. */
+@media (min-width: 901px) {
+  .sa-content main { width: 100%; max-width: none; box-sizing: border-box; margin: 0; }
+  .sa-brand { font-size: 16px; }
+  .sa-layout nav { margin: 36px 0 0; }
+  .sa-layout nav button, .sa-side-bottom button { font-size: 13px; }
+  .sa-side-bottom { margin-top: auto; }
+  .sa-content > header { padding-top: 8px; padding-bottom: 8px; }
+  .sa-content header h1 { font-size: 19px; }
+  .sa-content header p { font-size: 12px; }
+  .sa-heading h2 { font-size: 28px; }
+  .sa-heading p { font-size: 13px; }
+  .sa-heading { margin-bottom: 8px; }
+  .sa-stats { margin-top: 8px; }
+  .sa-stat { padding-top: 13px; padding-bottom: 13px; }
+  .sa-stat > span { padding: 9px; }
+  .sa-back, .sa-system-state { font-size: 12px; }
+  .sa-stat small { font-size: 11px; line-height: 1.15; }
+  .sa-stat strong { margin-top: 1px; font-size: 23px; line-height: 1.05; }
+  .sa-card-title > div { font-size: 16px; }
+  .sa-card-title > div small { font-size: 11px; }
+  .sa-table-wrap table { font-size: 12px; }
+  .sa-table-wrap th, .sa-table-wrap td { padding: 10px; }
+  .sa-table-wrap th { font-size: 11px; }
+  .sa-table-wrap td:first-child { position: relative; padding-left: 54px; }
+  .sa-table-wrap td:first-child .sa-avatar { position: absolute; top: 50%; left: 12px; margin: 0; transform: translateY(-50%); }
+  .sa-table-wrap td:first-child b { display: block; line-height: 1.2; }
+  .sa-table-wrap td:first-child small { margin: 2px 0 0; font-size: 10px; line-height: 1.2; }
+  .sa-copy, .sa-primary, .sa-search { font-size: 12px; }
+  .sa-security { display: flex; flex-direction: column; justify-content: space-between; gap: 16px; }
+  .sa-security .sa-card-title { margin-bottom: 0; }
+  .sa-security-mark { margin: 12px auto; }
+  .sa-security > p:not(.sa-good) { margin: 0 auto 8px; font-size: 12px; }
+  .sa-security .sa-good { margin: 0; font-size: 12px; }
+}

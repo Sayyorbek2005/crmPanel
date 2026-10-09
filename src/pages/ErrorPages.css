@@ -1,0 +1,135 @@
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.min-h-\[60vh\] {
+  min-height: 60vh;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.px-6 {
+  padding-inline: calc(var(--spacing) * 6);
+}
+
+.text-6xl {
+  font-size: var(--text-6xl);
+  line-height: var(--tw-leading, var(--text-6xl--line-height));
+}
+
+.mb-6 {
+  margin-bottom: calc(var(--spacing) * 6);
+}
+
+.select-none {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.text-sm {
+  font-size: var(--text-sm);
+  line-height: var(--tw-leading, var(--text-sm--line-height));
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+.font-semibold {
+  --tw-font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-semibold);
+}
+
+.mb-2 {
+  margin-bottom: calc(var(--spacing) * 2);
+}
+
+.px-3 {
+  padding-inline: calc(var(--spacing) * 3);
+}
+
+.py-1 {
+  padding-block: var(--spacing);
+}
+
+.rounded-full {
+  border-radius: 9999px;
+}
+
+.font-bold {
+  --tw-font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-bold);
+}
+
+.mb-3 {
+  margin-bottom: calc(var(--spacing) * 3);
+}
+
+.text-base {
+  font-size: var(--text-base);
+  line-height: var(--tw-leading, var(--text-base--line-height));
+}
+
+.max-w-md {
+  max-width: var(--container-md);
+}
+
+.leading-relaxed {
+  --tw-leading: var(--leading-relaxed);
+  line-height: var(--leading-relaxed);
+}
+
+.mb-8 {
+  margin-bottom: calc(var(--spacing) * 8);
+}
+
+.gap-3 {
+  gap: calc(var(--spacing) * 3);
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.py-20 {
+  padding-block: calc(var(--spacing) * 20);
+}
+
+.w-16 {
+  width: calc(var(--spacing) * 16);
+}
+
+.h-16 {
+  height: calc(var(--spacing) * 16);
+}
+
+.rounded-3xl {
+  border-radius: var(--radius-3xl);
+}
+
+.mb-4 {
+  margin-bottom: calc(var(--spacing) * 4);
+}
+
+.text-lg {
+  font-size: var(--text-lg);
+  line-height: var(--tw-leading, var(--text-lg--line-height));
+}
+
+.max-w-xs {
+  max-width: var(--container-xs);
+}

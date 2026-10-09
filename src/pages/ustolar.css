@@ -1,0 +1,195 @@
+/* Asosiy konteyner */
+.employees-container {
+    padding: 24px;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+/* Sarlavha qismi */
+.employees-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.employees-header h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #1f2937;
+}
+
+.employees-header p {
+    font-size: 14px;
+    color: #6b7280;
+}
+
+/* Qo'shish tugmasi */
+.add-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #2563eb;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.add-btn:hover {
+    background-color: #1d4ed8;
+}
+
+/* Kartochkalar paneli */
+.employees-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+.employee-card {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #f3f4f6;
+    padding: 20px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.2s;
+}
+
+.employee-card:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.emp-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.emp-dept {
+    display: inline-block;
+    background-color: #eff6ff;
+    color: #2563eb;
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+    margin-top: 4px;
+}
+
+.delete-btn {
+    background: none;
+    border: none;
+    color: #9ca3af;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.delete-btn:hover {
+    color: #ef4444;
+}
+
+.card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 14px;
+    color: #4b5563;
+    margin-top: 16px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Modal oyna */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    padding: 16px;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 16px;
+    max-width: 400px;
+    width: 100%;
+    padding: 24px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content h2 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #1f2937;
+    margin-bottom: 16px;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 4px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 14px;
+    outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.cancel-btn {
+    padding: 8px 16px;
+    border: 1px solid #d1d5db;
+    background: white;
+    color: #374151;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.submit-btn {
+    padding: 8px 16px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}

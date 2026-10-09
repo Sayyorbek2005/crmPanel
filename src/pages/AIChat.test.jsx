@@ -1,0 +1,51 @@
+import React, { act } from 'react';
+import { createRoot } from 'react-dom/client';
+import AIChat from './AIChat';
+import { LanguageProvider } from '../context/LanguageContext';
+import { setTextLanguage } from '../locales/translateText';
+let root, container;
+beforeEach(() => {
+  global.IS_REACT_ACT_ENVIRONMENT = true;
+  localStorage.clear(); sessionStorage.clear();
+  setTextLanguage('uz');
+  Element.prototype.scrollIntoView = jest.fn();
+  AbortSignal.timeout = () => new AbortController().signal;
+  global.fetch = jest.fn(async () => ({ok:true,json:async () => ({configured:false})}));
+  container = document.createElement('div'); document.body.appendChild(container);
+  root = createRoot(container);
+});
+test('Russian quick question and local answer use Russian without changing the user message', async () => {
+  localStorage.setItem('crm-lang', 'ru');
+  localStorage.setItem('crm_finance_operations_v1',JSON.stringify({incomes:[{amount:100}],expenses:[{category:'Ijara',amount:20}]}));
+  await act(async () => root.render(<LanguageProvider><AIChat user={{type:'director'}} /></LanguageProvider>));
+  await click('Как сократить расходы?');
+  expect(container.querySelector('.ai-message-user').textContent).toContain('Как сократить расходы?');
+  const answer=container.querySelectorAll('.ai-message-assistant')[1].textContent;
+  expect(answer).toContain('Общие расходы');
+  expect(answer).toContain('Аренда — 20 сум');
+  expect(answer).not.toContain('so\'m');
+});
+afterEach(async () => { await act(async () => root.unmount()); container.remove(); });
+const click = async name => { const button = [...container.querySelectorAll('button')].find(item => item.textContent === name); await act(async () => button.click()); };
+test('local analysis uses current finance and persists the conversation; OpenAI stays disabled without a key', async () => {
+  localStorage.setItem('crm_finance_operations_v1',JSON.stringify({incomes:[{amount:100}],expenses:[{category:'Ijara',amount:20}]}));
+  await act(async () => root.render(<AIChat user={{type:'director'}} />));
+  expect([...container.querySelectorAll('button')].find(item => item.textContent === 'OpenAI').disabled).toBe(true);
+  await click('Biznesimning umumiy holatini tahlil qil');
+  expect(container.querySelector('[role=log]').textContent).toContain('80');
+  expect(container.querySelector('[role=log]').textContent).toContain('bu sof foyda emas');
+  expect(JSON.parse(sessionStorage.getItem('crm_ai_chat_v1_director_director'))).toHaveLength(3);
+  localStorage.setItem('crm_finance_operations_v1',JSON.stringify({incomes:[{amount:200}],expenses:[]}));
+  await click('Biznesimning umumiy holatini tahlil qil');
+  expect(container.querySelector('[role=log]').lastElementChild.previousElementSibling.textContent).toContain('200');
+  expect(fetch).toHaveBeenCalledTimes(1);
+});
+test('failed AI request restores draft and shows an error without inventing an answer', async () => {
+  fetch.mockImplementation(async url => url.includes('health') ? {ok:true,json:async()=>({configured:true})} : {ok:false,json:async()=>({error:'Sinov xatosi'})});
+  await act(async () => root.render(<AIChat user={{type:'director'}} />));
+  await click('OpenAI');
+  await click('Qarzlarni undirish rejasini tuz');
+  expect(container.querySelector('[role=alert]').textContent).toContain('Sinov xatosi');
+  expect(container.querySelector('textarea').value).toBe('Qarzlarni undirish rejasini tuz');
+  expect(container.querySelectorAll('.ai-message-assistant')).toHaveLength(1);
+});

@@ -1,0 +1,34 @@
+.director-cards { margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--text-primary); }
+.director-cards-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
+.director-cards-heading h3 { display: flex; align-items: center; gap: 8px; margin: 0; font-size: 16px; font-weight: 600; }
+.director-cards-heading p, .director-cards-empty { margin: 8px 0 0; color: var(--text-muted); font-size: 13px; }
+.director-cards-heading .btn-primary { flex-shrink: 0; display: inline-flex; align-items: center; gap: 8px; }
+.director-cards-list { display: grid; gap: 12px; }
+.director-card { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding: 16px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; }
+.director-card-info { min-width: 0; display: flex; flex-direction: column; gap: 6px; overflow-wrap: anywhere; }
+.director-card-info > span, .director-card-info small { color: var(--text-secondary); font-size: 13px; }
+.director-card-info .director-card-number { color: var(--text-primary); font-size: 16px; font-variant-numeric: tabular-nums; letter-spacing: .04em; }
+.director-card-actions { display: flex; align-items: flex-start; gap: 4px; }
+.director-card-actions button { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); color: var(--text-secondary); }
+.director-card-form { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; padding: 16px; border: 1px solid var(--border); border-radius: 12px; }
+.director-card-modal { width: min(100%, 480px); max-height: 100%; overflow-y: auto; grid-template-columns: 1fr; margin: 0; padding: 24px; border: 1px solid var(--border); border-radius: 18px; background: var(--surface); box-shadow: 0 24px 64px rgba(15,23,42,.22); }
+.director-card-modal-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; grid-column: 1 / -1; }
+.director-card-modal-heading h3 { margin: 0; font-size: 18px; font-weight: 700; }
+.director-card-modal-heading p { margin: 4px 0 0; color: var(--text-muted); font-size: 13px; }
+.director-card-modal-heading button { display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); color: var(--text-secondary); }
+.director-card-form label { display: grid; gap: 8px; min-width: 0; font-size: 13px; font-weight: 600; }
+.director-card-number-field, .director-card-form-actions { grid-column: 1 / -1; }
+.director-card-form-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 12px; padding-top: 4px; }
+.director-card-form-actions button, .director-card-remove button { min-height: 44px; padding: 8px 16px; }
+.director-card-remove { flex-basis: 100%; border-top: 1px solid var(--border); padding-top: 12px; font-size: 13px; }
+.receiving-card-select { min-width: 0; }
+.receiving-card-select > label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 8px; color: var(--text-secondary); }
+.receiving-card-select select { width: 100%; min-height: 44px; padding: 10px; color: var(--text-primary); background: var(--surface); border: 1px solid var(--border); border-radius: 8px; font-size: 12px; }
+.receiving-card-select select:focus-visible, .director-cards button:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.receiving-card-preview { display: flex; flex-direction: column; gap: 4px; margin-top: 10px; padding: 12px; background: var(--brand-light); border-radius: 8px; overflow-wrap: anywhere; }
+.receiving-card-preview strong { color: var(--brand); font-size: 15px; font-variant-numeric: tabular-nums; }
+.receiving-card-preview span, .receiving-card-preview small { color: var(--text-secondary); font-size: 12px; }
+.receiving-card-select > p { margin-top: 8px; font-size: 12px; line-height: 1.5; color: var(--text-muted); }
+.receipt-payment-details { margin-top: 16px; padding-top: 12px; border-top: 1px dashed currentColor; font-size: 12px; line-height: 1.6; overflow-wrap: anywhere; }
+.receipt-payment-details p { margin: 4px 0; }
+@media (max-width: 600px) { .director-cards-heading { flex-direction: column; } .director-card-form { grid-template-columns: 1fr; } }

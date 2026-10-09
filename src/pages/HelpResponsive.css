@@ -1,0 +1,44 @@
+@media(max-width:760px){.support-page{height:calc(100dvh - 156px);max-height:calc(100dvh - 156px);padding:0;display:flex;flex-direction:column;overflow:hidden}.support-head{display:none}.support-layout{display:flex;flex:1 1 auto;flex-direction:column;min-height:0;overflow:hidden}.support-quick{display:none}.support-chat{position:relative;display:flex;flex:1 1 auto;height:auto;min-height:0!important;max-height:100%;overflow:hidden;border-radius:0 0 14px 14px}.support-chat header{flex:0 0 auto;position:relative;z-index:1}.support-messages{display:flex;flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding-bottom:78px}.support-chat form{display:flex;position:absolute;left:0;right:0;bottom:0;z-index:3;margin:0;box-shadow:0 -6px 18px #17345b10}.support-message{max-width:88%}}
+
+/* Keep the help workspace fixed: only the conversation itself scrolls. */
+@media (min-width: 761px) {
+  .support-page {
+    height: calc(100dvh - 116px);
+    min-height: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .support-head {
+    flex: 0 0 auto;
+    margin-bottom: 14px;
+    padding: 18px 28px;
+    border-radius: 18px;
+  }
+  .support-head h1 { margin: 10px 0 4px; font-size: 25px; }
+  .support-head p { font-size: 13px; }
+  .support-layout {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+    align-items: stretch;
+    gap: 16px;
+  }
+  .support-quick {
+    align-self: flex-start;
+    padding: 18px;
+  }
+  .support-chat {
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .support-chat header,
+  .support-chat form { flex: 0 0 auto; }
+  .support-messages {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}

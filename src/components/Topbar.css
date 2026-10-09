@@ -1,0 +1,354 @@
+.flex {
+  display: flex;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.h-16 {
+  height: calc(var(--spacing) * 16);
+}
+
+.px-6 {
+  padding-inline: calc(var(--spacing) * 6);
+}
+
+.gap-4 {
+  gap: calc(var(--spacing) * 4);
+}
+
+.shrink-0 {
+  flex-shrink: 0;
+}
+
+.gap-2 {
+  gap: calc(var(--spacing) * 2);
+}
+
+.rounded-xl {
+  border-radius: var(--radius-xl);
+}
+
+.px-4 {
+  padding-inline: calc(var(--spacing) * 4);
+}
+
+.py-2\.5 {
+  padding-block: calc(var(--spacing) * 2.5);
+}
+
+.text-sm {
+  font-size: var(--text-sm);
+  line-height: var(--tw-leading, var(--text-sm--line-height));
+}
+
+.transition-all {
+  transition-property: all;
+  transition-timing-function: var(
+    --tw-ease,
+    var(--default-transition-timing-function)
+  );
+  transition-duration: var(--tw-duration, var(--default-transition-duration));
+}
+
+@media (hover: hover) {
+  .hover\:opacity-90:hover {
+    opacity: 90%;
+  }
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-xs {
+  font-size: var(--text-xs);
+  line-height: var(--tw-leading, var(--text-xs--line-height));
+}
+
+.px-1\.5 {
+  padding-inline: calc(var(--spacing) * 1.5);
+}
+
+.py-0\.5 {
+  padding-block: calc(var(--spacing) * 0.5);
+}
+
+.rounded {
+  border-radius: 0.25rem;
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+.p-2\.5 {
+  padding: calc(var(--spacing) * 2.5);
+}
+
+@media (hover: hover) {
+  .hover\:opacity-80:hover {
+    opacity: 80%;
+  }
+}
+
+.py-2 {
+  padding-block: calc(var(--spacing) * 2);
+}
+
+.font-semibold {
+  --tw-font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-semibold);
+}
+
+.text-white {
+  color: var(--color-white);
+}
+
+.active\:scale-95:active {
+  --tw-scale-x: 95%;
+  --tw-scale-y: 95%;
+  --tw-scale-z: 95%;
+  scale: var(--tw-scale-x) var(--tw-scale-y);
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.top-1 {
+  top: var(--spacing);
+}
+
+.right-1 {
+  right: var(--spacing);
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.rounded-full {
+  border-radius: 9999px;
+}
+
+.font-bold {
+  --tw-font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-bold);
+}
+
+.gap-2\.5 {
+  gap: calc(var(--spacing) * 2.5);
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.w-8 {
+  width: calc(var(--spacing) * 8);
+}
+
+.h-8 {
+  height: calc(var(--spacing) * 8);
+}
+
+.hidden {
+  display: none;
+}
+
+@media (width >= 40rem) {
+  .sm\:block {
+    display: block;
+  }
+}
+
+.leading-tight {
+  --tw-leading: var(--leading-tight);
+  line-height: var(--leading-tight);
+}
+
+.fixed {
+  position: fixed;
+}
+
+.inset-0 {
+  inset: 0px;
+}
+
+.z-\[60\] {
+  z-index: 60;
+}
+
+.items-start {
+  align-items: flex-start;
+}
+
+.pt-20 {
+  padding-top: calc(var(--spacing) * 20);
+}
+
+.w-full {
+  width: 100%;
+}
+
+.max-w-xl {
+  max-width: var(--container-xl);
+}
+
+.rounded-2xl {
+  border-radius: var(--radius-2xl);
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.gap-3 {
+  gap: calc(var(--spacing) * 3);
+}
+
+.px-5 {
+  padding-inline: calc(var(--spacing) * 5);
+}
+
+.py-4 {
+  padding-block: calc(var(--spacing) * 4);
+}
+
+.text-base {
+  font-size: var(--text-base);
+  line-height: var(--tw-leading, var(--text-base--line-height));
+}
+
+.outline-none {
+  --tw-outline-style: none;
+  outline-style: none;
+}
+
+.bg-transparent {
+  background-color: transparent;
+}
+
+.max-h-80 {
+  max-height: calc(var(--spacing) * 80);
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
+.p-2 {
+  padding: calc(var(--spacing) * 2);
+}
+
+.px-3 {
+  padding-inline: calc(var(--spacing) * 3);
+}
+
+.mb-2 {
+  margin-bottom: calc(var(--spacing) * 2);
+}
+
+.text-xl {
+  font-size: var(--text-xl);
+  line-height: var(--tw-leading, var(--text-xl--line-height));
+}
+
+.font-medium {
+  --tw-font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-medium);
+}
+
+.py-10 {
+  padding-block: calc(var(--spacing) * 10);
+}
+
+.text-center {
+  text-align: center;
+}
+/* "Yangi sotuv" tugmasidagi yozuvni yashirib, faqat savatcha (plus) iconini
+   qoldirish — endi 700px va undan kichik ekranlarning barchasida ishlaydi
+   (oldin faqat 340px gacha ishlar edi). */
+@media (max-width: 700px) {
+  .quick-sale-text {
+    display: none;
+  }
+
+  .quick-sale-btn {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+}
+
+/* 380px gacha bo'lgan juda kichik ekranlar uchun qo'shimcha responsive moslashuv */
+@media (max-width: 380px) {
+  .topbar-container {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+    gap: 6px !important;
+  }
+
+  /* Qidirish inputini ixchamlashtirish */
+  .search-pill {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+    min-width: 70px !important;
+  }
+
+  .quick-sale-btn {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+
+  /* Til almashtirish (UZ/RU) tugmachasini ixchamlashtirish */
+  .lang-switch {
+    padding: 1px !important;
+  }
+
+  .lang-switch-btn {
+    padding: 4px 6px !important;
+    font-size: 10px !important;
+  }
+}
+
+/* 340px va undan ham kichik ekranlar uchun qo'shimcha siqish */
+@media (max-width: 340px) {
+  .topbar-container {
+    padding-left: 6px !important;
+    padding-right: 6px !important;
+    gap: 4px !important;
+  }
+
+  .search-pill {
+    min-width: 44px !important;
+    padding-left: 6px !important;
+    padding-right: 6px !important;
+  }
+
+  .lang-switch-btn {
+    padding: 3px 5px !important;
+    font-size: 9px !important;
+  }
+}
+/* Dashboard ikonchasi ekran kichrayganda kichrayishi uchun */
+@media (max-width: 640px) {
+  .dashboard-responsive-btn {
+    transform: scale(0.70 );
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-responsive-btn {
+    transform: scale(0.60);
+  }
+}

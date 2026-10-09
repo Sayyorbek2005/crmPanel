@@ -1,0 +1,14 @@
+@media(min-width:901px){
+  .sa-layout{height:100dvh;min-height:0;overflow:hidden}
+  .sa-content{display:flex;flex-direction:column;min-height:0}
+  .sa-content main{flex:1 1 auto;min-height:0;overflow:hidden;display:flex;flex-direction:column}
+  .sa-content main>.sa-heading,.sa-content main>.sa-stats{flex:0 0 auto}
+  .sa-content main>.sa-grid{flex:1 1 auto;min-height:0;overflow:hidden;padding-right:0}
+  .sa-grid>.sa-wide{display:flex;flex-direction:column;min-height:0}
+  .sa-grid>.sa-wide .sa-table-wrap{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain}
+  .sa-grid>.sa-security{align-self:stretch;min-height:0;overflow:hidden}
+  .sa-content main>.sa-support{flex:1 1 auto;min-height:0;overflow:hidden}
+  .sa-support-chat{height:100%;min-height:0!important;box-sizing:border-box;overflow:hidden}
+  .sa-admin-messages{min-height:0;overflow-y:auto;overscroll-behavior:contain}
+  .sa-support-chat form{flex:0 0 auto}
+}
