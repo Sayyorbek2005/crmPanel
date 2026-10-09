@@ -1,8 +1,11 @@
+import { useState, useMemo } from "react";
+
 import { createReportPdf } from "../locales/reportPdf";
 import { translateText as tx } from "../locales/translateText";
 import { useLanguage as useUILanguage } from "../context/LanguageContext";
-import './Reports.css';
-import { useState, useMemo } from "react";
+
+import "./Reports.css";
+
 import {
   Download,
   FileText,
@@ -14,6 +17,7 @@ import {
   ShoppingCart,
   Printer,
 } from "lucide-react";
+
 import {
   ResponsiveContainer,
   AreaChart,
@@ -23,8 +27,13 @@ import {
   CartesianGrid,
   Tooltip,
 } from "recharts";
+
 import { readFinanceOperations } from "../data/financeStore";
-import { readDebtPayments, readPosSales, withDebtBalance } from "../data/debtPayments";
+import {
+  readDebtPayments,
+  readPosSales,
+  withDebtBalance,
+} from "../data/debtPayments";
 import { formatCurrency } from "../data/currency";
 
 const readBusinessList = (key) => {
@@ -38,10 +47,11 @@ const readBusinessList = (key) => {
 
 const reportDate = (value) => {
   const date = new Date(value);
-  return Number.isNaN(date.getTime()) ? new Date().toISOString().slice(0, 10) : date.toISOString().slice(0, 10);
-};
 
-const fmt = (n) => (n / 1000000).toFixed(1) + " mln";
+  return Number.isNaN(date.getTime())
+    ? new Date().toISOString().slice(0, 10)
+    : date.toISOString().slice(0, 10);
+};
 
 const reportTypes = [
   {
@@ -112,60 +122,137 @@ const reportTypes = [
   },
 ];
 
-// Hafta, Oy, Chorak, Yil bo'yicha ma'lumotlarni filtrlash mantiqi
+// Mavjud davr bo'yicha filtrlash mantiqi.
 const filterDataByRange = (data, range) => {
-  if (!data || !data.length) return [];
-  const days = range === "week" ? 7 : range === "quarter" ? 90 : range === "year" ? 365 : 30;
+  if (!data || !data.length) {
+    return [];
+  }
+
+  const days =
+    range === "week"
+      ? 7
+      : range === "quarter"
+        ? 90
+        : range === "year"
+          ? 365
+          : 30;
+
   return data.slice(-days);
 };
 
 export default function Reports() {
   useUILanguage();
+
   const [selectedReport, setSelectedReport] = useState("Sotuv hisoboti");
   const [dateRange, setDateRange] = useState("month");
+
   const monthlyData = useMemo(() => {
     const payments = readDebtPayments();
-    const sales = readPosSales().map((sale) => withDebtBalance(sale, payments));
+
+    const sales = readPosSales().map((sale) =>
+      withDebtBalance(sale, payments)
+    );
+
     const finance = readFinanceOperations();
-    const returns = readBusinessList("crm_returns").filter((item) => item.status === "approved");
+
+    const returns = readBusinessList("crm_returns").filter(
+      (item) => item.status === "approved"
+    );
+
     const returnedBySale = returns.reduce((totals, item) => {
-      totals[String(item.saleId || "")] = (totals[String(item.saleId || "")] || 0) + Number(item.amount || 0);
+      const saleId = String(item.saleId || "");
+
+      totals[saleId] =
+        (totals[saleId] || 0) + Number(item.amount || 0);
+
       return totals;
     }, {});
+
     const grouped = {};
+
     const add = (date, key, amount) => {
       const day = reportDate(date);
-      if (!grouped[day]) grouped[day] = { date: day, revenue: 0, profit: 0, expenses: 0 };
+
+      if (!grouped[day]) {
+        grouped[day] = {
+          date: day,
+          revenue: 0,
+          profit: 0,
+          expenses: 0,
+        };
+      }
+
       grouped[day][key] += Number(amount || 0);
     };
-    sales.forEach((sale) => add(sale.createdAt || sale.date, "revenue", Math.max(0, Number(sale.amount || 0) - Number(returnedBySale[String(sale.id)] || 0))));
-    finance.incomes.forEach((item) => add(item.date, "revenue", item.amount));
-    finance.expenses.forEach((item) => add(item.date, "expenses", item.amount));
-    returns.forEach((item) => add(item.createdAt || item.date, "expenses", item.amount));
-    return Object.values(grouped).map((item) => ({ ...item, profit: item.revenue - item.expenses })).sort((a, b) => a.date.localeCompare(b.date));
+
+    sales.forEach((sale) => {
+      add(
+        sale.createdAt || sale.date,
+        "revenue",
+        Math.max(
+          0,
+          Number(sale.amount || 0) -
+            Number(returnedBySale[String(sale.id)] || 0)
+        )
+      );
+    });
+
+    finance.incomes.forEach((item) => {
+      add(item.date, "revenue", item.amount);
+    });
+
+    finance.expenses.forEach((item) => {
+      add(item.date, "expenses", item.amount);
+    });
+
+    returns.forEach((item) => {
+      add(item.createdAt || item.date, "expenses", item.amount);
+    });
+
+    return Object.values(grouped)
+      .map((item) => ({
+        ...item,
+        profit: item.revenue - item.expenses,
+      }))
+      .sort((a, b) => a.date.localeCompare(b.date));
   }, []);
 
-  // Tanlangan hisobot obyektini topish
+  // Tanlangan hisobot.
   const currentReportObj = useMemo(() => {
     return (
-      reportTypes.find((r) => r.label === selectedReport) || reportTypes[0]
+      reportTypes.find((report) => report.label === selectedReport) ||
+      reportTypes[0]
     );
   }, [selectedReport]);
 
-  // Tanlangan davrga mos ma'lumotlarni hisoblash
+  // Tanlangan davr ma'lumotlari.
   const chartData = useMemo(() => {
     return filterDataByRange(monthlyData, dateRange);
   }, [monthlyData, dateRange]);
 
-  // Dinamik xulosa (Summary) kartochkalari ma'lumotlari
+  // Xulosa kartochkalari.
   const summaryCards = useMemo(() => {
     const totalRev = chartData.reduce(
       (acc, item) => acc + (item[currentReportObj.primaryKey] || 0),
       0
     );
-    const avgRev = chartData.length ? Math.round(totalRev / chartData.length) : 0;
 
-    const top = chartData.reduce((best, item) => !best || Number(item[currentReportObj.primaryKey] || 0) > Number(best[currentReportObj.primaryKey] || 0) ? item : best, null);
+    const avgRev = chartData.length
+      ? Math.round(totalRev / chartData.length)
+      : 0;
+
+    const top = chartData.reduce((best, item) => {
+      if (
+        !best ||
+        Number(item[currentReportObj.primaryKey] || 0) >
+          Number(best[currentReportObj.primaryKey] || 0)
+      ) {
+        return item;
+      }
+
+      return best;
+    }, null);
+
     return [
       {
         label: `Umumiy (${currentReportObj.primaryName})`,
@@ -173,96 +260,166 @@ export default function Reports() {
         change: "0%",
       },
       {
-        label: `O'rtacha ko'rsatkich`,
+        label: "O'rtacha ko'rsatkich",
         value: formatCurrency(avgRev),
         change: "0%",
       },
       {
         label: "Eng yuqori ko'rsatkich",
-        value: top ? formatCurrency(Number(top[currentReportObj.primaryKey] || 0)) : "—",
+        value: top
+          ? formatCurrency(Number(top[currentReportObj.primaryKey] || 0))
+          : "—",
         change: top ? top.date : "Ma'lumot yo'q",
       },
     ];
   }, [chartData, currentReportObj]);
 
-  // Eksport funksiyalari
-  const mKeys = chartData && chartData.length ? Object.keys(chartData[0]) : [];
-  const fmtVal = (v) => (typeof v === "number" ? formatCurrency(v) : tx(String(v)));
-  const columnLabel = key => tx({ date: "Sana", revenue: "Daromad", profit: "Foyda", expenses: "Xarajatlar" }[key] || key);
+  // Eksport.
+  const mKeys = chartData.length ? Object.keys(chartData[0]) : [];
+
+  const fmtVal = (value) =>
+    typeof value === "number"
+      ? formatCurrency(value)
+      : tx(String(value));
+
+  const columnLabel = (key) =>
+    tx(
+      {
+        date: "Sana",
+        revenue: "Daromad",
+        profit: "Foyda",
+        expenses: "Xarajatlar",
+      }[key] || key
+    );
+
   const periodLabel =
     dateRange === "week"
       ? "Hafta"
       : dateRange === "month"
-      ? "Oy"
-      : dateRange === "quarter"
-      ? "Chorak"
-      : "Yil";
+        ? "Oy"
+        : dateRange === "quarter"
+          ? "Chorak"
+          : "Yil";
+
   const fileBase = selectedReport.replace(/\s+/g, "-").toLowerCase();
 
   const handleExcel = () => {
     const rows = [mKeys.map(columnLabel).join(";")].concat(
-      chartData.map((m) => mKeys.map((k) => fmtVal(m[k])).join(";"))
+      chartData.map((row) =>
+        mKeys.map((key) => fmtVal(row[key])).join(";")
+      )
     );
+
     const csv = "\uFEFF" + rows.join("\n");
-    const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+
+    const blob = new Blob([csv], {
+      type: "text/csv;charset=utf-8",
+    });
+
     const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${fileBase}-${dateRange}.csv`;
-    a.click();
-    URL.revokeObjectURL(url);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = `${fileBase}-${dateRange}.csv`;
+
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
 
   const handlePrint = () => {
-    const head = mKeys.map((k) => "<th>" + columnLabel(k) + "</th>").join("");
+    const head = mKeys
+      .map((key) => "<th>" + columnLabel(key) + "</th>")
+      .join("");
+
     const body = chartData
       .map(
-        (m) =>
+        (row) =>
           "<tr>" +
-          mKeys.map((k) => "<td>" + fmtVal(m[k]) + "</td>").join("") +
+          mKeys
+            .map((key) => "<td>" + fmtVal(row[key]) + "</td>")
+            .join("") +
           "</tr>"
       )
       .join("");
+
     const html =
-      "<html><head><title>" +
+      "<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>" +
       tx(selectedReport) +
-      "</title><style>body{font-family:Arial;color:#111;padding:24px}h1{font-size:18px;margin:0 0 4px}p{color:#555;font-size:12px}table{width:100%;border-collapse:collapse;margin-top:14px}th,td{border:1px solid #ccc;padding:8px;text-align:left;font-size:12px}th{background:#f3f4f6}</style></head><body><h1>UyMarket — " +
+      "</title><style>" +
+      "body{font-family:Arial;color:#111;padding:24px}" +
+      "h1{font-size:18px;margin:0 0 4px}" +
+      "p{color:#555;font-size:12px}" +
+      "table{width:100%;border-collapse:collapse;margin-top:14px}" +
+      "th,td{border:1px solid #ccc;padding:8px;text-align:left;font-size:12px}" +
+      "th{background:#f3f4f6}" +
+      "</style></head><body><h1>UyMarket — " +
       tx(selectedReport) +
-      "</h1><p>" + tx("Davr:") + " " +
+      "</h1><p>" +
+      tx("Davr:") +
+      " " +
       tx(periodLabel) +
-      "</p><table><tr>" +
+      "</p><table><thead><tr>" +
       head +
-      "</tr>" +
+      "</tr></thead><tbody>" +
       body +
-      "</table></body></html>";
-    const w = window.open("", "_blank", "width=800,height=600");
-    if (w) {
-      w.document.write(html);
-      w.document.close();
-      w.focus();
-      w.print();
+      "</tbody></table></body></html>";
+
+    const printWindow = window.open(
+      "",
+      "_blank",
+      "width=800,height=600"
+    );
+
+    if (printWindow) {
+      printWindow.document.write(html);
+      printWindow.document.close();
+      printWindow.focus();
+      printWindow.print();
     }
   };
 
   const handlePdf = () => {
     const lines = [
-      { t: "UyMarket — " + tx(selectedReport), s: 15, b: true },
-      { t: tx("Davr:") + " " + tx(periodLabel), s: 10 },
-      { t: mKeys.map(columnLabel).join("     "), s: 10, b: true },
-      ...chartData.map(row => ({ t: mKeys.map(key => fmtVal(row[key])).join("     "), s: 10 })),
+      {
+        t: "UyMarket — " + tx(selectedReport),
+        s: 15,
+        b: true,
+      },
+      {
+        t: tx("Davr:") + " " + tx(periodLabel),
+        s: 10,
+      },
+      {
+        t: mKeys.map(columnLabel).join("     "),
+        s: 10,
+        b: true,
+      },
+      ...chartData.map((row) => ({
+        t: mKeys.map((key) => fmtVal(row[key])).join("     "),
+        s: 10,
+      })),
     ];
+
     const blob = createReportPdf(lines);
     const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${fileBase}-${dateRange}.pdf`;
-    a.click();
-    URL.revokeObjectURL(url);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = `${fileBase}-${dateRange}.pdf`;
+
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
 
   return (
     <div className="space-y-6 fade-in pb-8">
-      {/* Sarlavha va Eksport tugmalari */}
+      {/* Sarlavha va eksport tugmalari */}
       <div className="flex items-center justify-between">
         <div>
           <h1
@@ -271,16 +428,23 @@ export default function Reports() {
               fontFamily: "'Manrope',sans-serif",
               color: "var(--text-primary)",
             }}
-          >{tx("Hisobotlar")}</h1>
+          >
+            {tx("Hisobotlar")}
+          </h1>
+
           <p
             className="text-sm mt-0.5"
             style={{
               color: "var(--text-muted)",
             }}
-          >{tx("Analitika va biznes ko'rsatkichlari")}</p>
+          >
+            {tx("Analitika va biznes ko'rsatkichlari")}
+          </p>
         </div>
+
         <div className="flex items-center gap-2">
           <button
+            type="button"
             className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm border hover:bg-gray-50 transition-colors"
             onClick={handlePrint}
             style={{
@@ -289,8 +453,12 @@ export default function Reports() {
               cursor: "pointer",
             }}
           >
-            <Printer size={14} />{tx(" Chop etish")}</button>
+            <Printer size={14} />
+            {tx(" Chop etish")}
+          </button>
+
           <button
+            type="button"
             className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm border hover:bg-gray-50 transition-colors"
             onClick={handlePdf}
             style={{
@@ -299,8 +467,12 @@ export default function Reports() {
               cursor: "pointer",
             }}
           >
-            <FileText size={14} />{tx(" PDF")}</button>
+            <FileText size={14} />
+            {tx(" PDF")}
+          </button>
+
           <button
+            type="button"
             className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-white hover:opacity-90 transition-opacity"
             onClick={handleExcel}
             style={{
@@ -310,28 +482,33 @@ export default function Reports() {
               cursor: "pointer",
             }}
           >
-            <Download size={15} />{tx(" Excel")}</button>
+            <Download size={15} />
+            {tx(" Excel")}
+          </button>
         </div>
       </div>
 
-      {/* Hisobot turlari kartochkalari (Bosganda aktiv bo'ladi) */}
+      {/* Hisobot turlari */}
       <div className="grid grid-cols-3 gap-3">
-        {reportTypes.map((r) => (
+        {reportTypes.map((report) => (
           <button
-            key={r.label}
-            onClick={() => setSelectedReport(r.label)}
+            key={report.label}
+            type="button"
+            onClick={() => setSelectedReport(report.label)}
             className="flex items-center gap-3 p-4 rounded-2xl text-left transition-all"
             style={{
               background:
-                selectedReport === r.label ? r.bg : "var(--surface)",
+                selectedReport === report.label
+                  ? report.bg
+                  : "var(--surface)",
               border: `1px solid ${
-                selectedReport === r.label
+                selectedReport === report.label
                   ? "var(--brand-border)"
                   : "var(--border)"
               }`,
               boxShadow:
-                selectedReport === r.label
-                  ? `0 2px 12px rgba(37,99,235,0.12)`
+                selectedReport === report.label
+                  ? "0 2px 12px rgba(37,99,235,0.12)"
                   : "0 2px 8px rgba(15,23,42,0.04)",
               cursor: "pointer",
             }}
@@ -339,40 +516,49 @@ export default function Reports() {
             <div
               className="p-2.5 rounded-xl shrink-0"
               style={{
-                background: selectedReport === r.label ? r.color : r.bg,
+                background:
+                  selectedReport === report.label
+                    ? report.color
+                    : report.bg,
               }}
             >
-              <r.icon
+              <report.icon
                 size={16}
-                color={selectedReport === r.label ? "white" : r.color}
+                color={
+                  selectedReport === report.label
+                    ? "white"
+                    : report.color
+                }
               />
             </div>
+
             <div>
               <div
                 className="text-sm font-semibold"
                 style={{
                   color:
-                    selectedReport === r.label
-                      ? r.color
+                    selectedReport === report.label
+                      ? report.color
                       : "var(--text-primary)",
                 }}
               >
-                {tx(r.label)}
+                {tx(report.label)}
               </div>
+
               <div
                 className="text-xs mt-0.5"
                 style={{
                   color: "var(--text-faint)",
                 }}
               >
-                {tx(r.desc)}
+                {tx(report.desc)}
               </div>
             </div>
           </button>
         ))}
       </div>
 
-      {/* Davr tanlovi + Grafik bo'limi */}
+      {/* Davr tanlovi va grafik */}
       <div
         className="rounded-2xl p-5"
         style={{
@@ -392,16 +578,18 @@ export default function Reports() {
             >
               {tx(selectedReport)}
             </h2>
+
             <p
               className="text-xs mt-0.5"
               style={{
                 color: "var(--text-faint)",
               }}
             >
-              {tx(periodLabel)}{tx(" ko'rsatkichlari")}</p>
+              {tx(periodLabel)}
+              {tx(" ko'rsatkichlari")}
+            </p>
           </div>
 
-          {/* Hafta / Oy / Chorak / Yil tugmalari */}
           <div
             className="flex items-center gap-1 rounded-xl p-1"
             style={{
@@ -414,32 +602,34 @@ export default function Reports() {
               { key: "month", label: "Oy" },
               { key: "quarter", label: "Chorak" },
               { key: "year", label: "Yil" },
-            ].map((r) => (
+            ].map((range) => (
               <button
-                key={r.key}
-                onClick={() => setDateRange(r.key)}
+                key={range.key}
+                type="button"
+                onClick={() => setDateRange(range.key)}
                 className="px-3 py-1 rounded-lg text-xs font-medium transition-all"
                 style={{
                   background:
-                    dateRange === r.key ? "var(--surface)" : "transparent",
+                    dateRange === range.key
+                      ? "var(--surface)"
+                      : "transparent",
                   color:
-                    dateRange === r.key
+                    dateRange === range.key
                       ? "var(--text-primary)"
                       : "var(--text-muted)",
                   boxShadow:
-                    dateRange === r.key
+                    dateRange === range.key
                       ? "0 1px 3px rgba(15,23,42,0.08)"
                       : "none",
                   cursor: "pointer",
                 }}
               >
-                {tx(r.label)}
+                {tx(range.label)}
               </button>
             ))}
           </div>
         </div>
 
-        {/* Recharts AreaChart (140.0 mln yozuvi to'liq pastroqqa tushirilgan) */}
         <ResponsiveContainer width="100%" height={260}>
           <AreaChart
             data={chartData}
@@ -451,7 +641,13 @@ export default function Reports() {
             }}
           >
             <defs>
-              <linearGradient id="primColor" x1="0" y1="0" x2="0" y2="1">
+              <linearGradient
+                id="primColor"
+                x1="0"
+                y1="0"
+                x2="0"
+                y2="1"
+              >
                 <stop
                   offset="5%"
                   stopColor={currentReportObj.color}
@@ -463,7 +659,14 @@ export default function Reports() {
                   stopOpacity={0}
                 />
               </linearGradient>
-              <linearGradient id="secColor" x1="0" y1="0" x2="0" y2="1">
+
+              <linearGradient
+                id="secColor"
+                x1="0"
+                y1="0"
+                x2="0"
+                y2="1"
+              >
                 <stop
                   offset="5%"
                   stopColor="var(--success)"
@@ -476,12 +679,15 @@ export default function Reports() {
                 />
               </linearGradient>
             </defs>
+
             <CartesianGrid
               strokeDasharray="3 3"
               stroke="var(--border-subtle)"
               vertical={false}
             />
-            <XAxis tickFormatter={(value) => tx(value)}
+
+            <XAxis
+              tickFormatter={(value) => tx(value)}
               dataKey="date"
               tick={{
                 fontSize: 11,
@@ -490,11 +696,11 @@ export default function Reports() {
               axisLine={false}
               tickLine={false}
             />
-            {/* 140.0 mln qiymatining yarmi to'silib qolmasligi uchun domain 160.0 mln ga ko'tarilgan */}
+
             <YAxis
               domain={[0, 160000000]}
               ticks={[0, 35000000, 70000000, 105000000, 140000000]}
-              tickFormatter={(v) => formatCurrency(v)}
+              tickFormatter={(value) => formatCurrency(value)}
               tick={{
                 fontSize: 11,
                 fill: "var(--text-faint)",
@@ -503,8 +709,13 @@ export default function Reports() {
               tickLine={false}
               width={65}
             />
+
             <Tooltip
-              formatter={(v, name) => [formatCurrency(Number(v)), tx(name)]} labelFormatter={(value) => tx(value)}
+              formatter={(value, name) => [
+                formatCurrency(Number(value)),
+                tx(name),
+              ]}
+              labelFormatter={(value) => tx(value)}
               contentStyle={{
                 background: "var(--text-primary)",
                 border: "none",
@@ -513,6 +724,7 @@ export default function Reports() {
                 fontSize: 12,
               }}
             />
+
             <Area
               type="monotone"
               dataKey={currentReportObj.primaryKey}
@@ -522,6 +734,7 @@ export default function Reports() {
               strokeWidth={2.5}
               dot={false}
             />
+
             <Area
               type="monotone"
               dataKey={currentReportObj.secondaryKey}
@@ -535,11 +748,11 @@ export default function Reports() {
         </ResponsiveContainer>
       </div>
 
-      {/* Dinamik xulosa kartochkalari */}
+      {/* Xulosa kartochkalari */}
       <div className="grid grid-cols-3 gap-4">
-        {summaryCards.map((s) => (
+        {summaryCards.map((card) => (
           <div
-            key={s.label}
+            key={card.label}
             className="rounded-2xl p-4"
             style={{
               background: "var(--surface)",
@@ -553,8 +766,9 @@ export default function Reports() {
                 color: "var(--text-faint)",
               }}
             >
-              {tx(s.label)}
+              {tx(card.label)}
             </div>
+
             <div
               className="text-lg font-display font-bold"
               style={{
@@ -562,15 +776,16 @@ export default function Reports() {
                 color: "var(--text-primary)",
               }}
             >
-              {tx(s.value)}
+              {tx(card.value)}
             </div>
+
             <div
               className="text-xs mt-1 font-semibold"
               style={{
                 color: "var(--success)",
               }}
             >
-              {tx(s.change)}
+              {tx(card.change)}
             </div>
           </div>
         ))}
